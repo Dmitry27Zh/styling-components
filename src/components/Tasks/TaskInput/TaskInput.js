@@ -10,12 +10,14 @@ const FormControl = styled.div`
     font-weight: bold;
     display: block;
     margin-bottom: 0.5rem;
+    color: ${(props) => props.invalid ? 'red' : 'black'};
   }
 
   & input {
     display: block;
     width: 100%;
-    border: 1px solid #ccc;
+    border: 1px solid ${(props) => props.invalid ? 'red' : '#ccc'};
+    background: ${(props) => props.invalid ? 'rgb(243, 157, 157)' : 'transparent'};
     font: inherit;
     line-height: 1.5rem;
     padding: 0 0.25rem;
@@ -23,17 +25,8 @@ const FormControl = styled.div`
 
   & input:focus {
     outline: none;
-    background: #c8e1e4;
-    border-color: #00358b;
-  }
-
-  &.invalid input {
-    border-color: red;
-    background-color: salmon;
-  }
-
-  &.invalid label {
-    color: red;
+    background: ${(props) => props.invalid ? 'rgb(243, 157, 157)' : '#c8e1e4'};
+    border-color: ${(props) => props.invalid ? 'red' : '#00358b'};
   }
 `;
 
@@ -64,19 +57,10 @@ const TaskInput = (props) => {
 
     props.onAddTask(inputText);
   };
-  const getFormControlClassName = () => {
-    let className = ''
-
-    if (!inputValidity) {
-      className += ' invalid'
-    }
-
-    return className
-  }
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <FormControl className={getFormControlClassName()}>
+      <FormControl invalid={!inputValidity}>
         <label>Задачи</label>
         <input type="text" onChange={taskInputChangeHandler} />
       </FormControl>
