@@ -30,19 +30,21 @@ const TaskInput = (props) => {
 
     props.onAddTask(inputText);
   };
-  const labelStyles = {
-    color: inputValidity ? '' : 'red'
-  }
-  const inputStyles = {
-    borderColor: inputValidity ? '' : 'red',
-    backgroundColor: inputValidity ? '' : 'salmon'
+  const getFormControlClassName = () => {
+    let className = 'form-control'
+
+    if (!inputValidity) {
+      className += ' invalid'
+    }
+
+    return className
   }
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className="form-control">
-        <label style={labelStyles}>Задачи</label>
-        <input type="text" style={inputStyles} onChange={taskInputChangeHandler} />
+      <div className={getFormControlClassName()}>
+        <label>Задачи</label>
+        <input type="text" onChange={taskInputChangeHandler} />
       </div>
       <Button type="submit">Добавить Задачу</Button>
     </form>
